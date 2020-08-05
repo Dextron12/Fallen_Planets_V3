@@ -186,30 +186,10 @@ class Game:
                                             scroll[1] += 45
                         auth.window.fill(colours.get('Sky_blue'))
 
-<<<<<<< HEAD
-                        boxWidth = int((auth.width-20)/6)
-                        boxHeight = int((auth.height-90)/3)
-
-                        mouse,click = pygame.mouse.get_pos()< pygame.mouse.get_pressed()
-
-                        for i in range(len(files)):
-                            if i == 0:
-                                pygame.draw.rect(auth.window, (colours.get('Steel_gray')), (10,10,boxWidth.boxHeight))
-                                GUI.text(boxWidth/2,boxHeight/2, 'Biome', 15, files[i], colours.get('Azure'), auth.window)
-                                if 10+boxWidth > mouse[0] > 10 and 10+boxHeight > mouse[1] > 10:
-                                    if click == True:
-                                        loadSaveFile = files[i]
-                            else:
-                                pygame.draw.rect(auth.window, colours.get('Steel_gray'), (boxWidth*(i+1),boxHeight*(i+1),boxWidth,boxHeight))
-                                
-
-
-=======
                         for box in range(len(saveBox)):
                             if saveBox[box][0] > 90 and saveBox[box][1] < auth.height:
                                 pygame.draw.rect(auth.window, colours.get('Steel_gray'), (saveBox[box][0],saveBox[box][1],auth.width-20,30))
                                 #GUI.text((aut.width-20)/2,saveBox[box][1]+10,'Biome', 15, files[box], colours.get('Azure'), auth.window)
->>>>>>> 4c6132d5d960a10501c4868496ddf7dd51452e5c
 
                         
                         pygame.display.flip()
