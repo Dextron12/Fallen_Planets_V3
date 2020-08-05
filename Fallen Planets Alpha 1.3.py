@@ -104,7 +104,7 @@ class Game:
                                 # self.initiate(self, 'load')
                         else:
                             os.mkdir(BASE_DIR + '/Saves')    
-                            with open(BASE_DIR + '/Saves/%s' % (saveForm), 'w') as f: # CREATE GENERIC SAVE
+                            with open(BASE_DIR + "/Saves/%s" % (saveForm), "w") as f: # CREATE GENERIC SAVE
                                 f.write('Username: %s\nDate Created: %s\nCurrent level: %s\nCurrent World: %s\nInventoy: %s\nHealth Inventory: %s' % (auth.user,datetime.now(),1,'map1',{},{}))
                             completed = True
                 else:
@@ -132,7 +132,7 @@ class Game:
 
                     if auth.width/2+20 > mouse[0] > auth.width/2+10 and 10+auth.height-20 > mouse[1] > auth.height-20:
                         # female selected | SECOND RECTANGLE |
-                        with open(BASE_DIR + '\\' + '/Saves/%s' % saveForm), 'r') as f:
+                        with open(BASE_DIR + '//Saves//%s' % (saveForm), 'r') as f:
                             data = f.read()
                         data = data.split('\n')
                         data[2] = 'Sprite: Female'
@@ -144,32 +144,49 @@ class Game:
                         with open(BASE_DIR + '/Saves/%s' % (saveForm), "w") as f:
                             f.write(compiled)
                         self.saveData = data
-                        self.initiate(self, 'load')                    
+                        self.initiate(self, 'load') # WHY ARE WE LOADING WHEN WE HAVE ALREADY ADDED SAVE TO SELF.SAVEDATA                 
 
 
 
                 pygame.display.flip()
         if method == 'load': #LOAD SCREEN, WORLD, SAVE DATA IF NOT LOADED, LOAD INVENTORY AND WORLD ITEMS, FINIALIZE AND SEND TO MAIN FUNC
-            if self.saveData != []: # NO SAVE LOADED | DISPLAY ALL SAVES IN SAVE FOLDER AND ALLOW USER TO SELECT SAVE
+            if self.saveData == []: # NO SAVE LOADED | DISPLAY ALL SAVES IN SAVE FOLDER AND ALLOW USER TO SELECT SAVE
                 if os.path.isdir(BASE_DIR + '//' + '/Saves/'):
                     saveDir = BASE_DIR + '//' + '/Saves/'
                     files = os.listdir(saveDir)
+                    print(files)
                     for f in files:
-                        if not os.path.isfile(f):
+                        if not os.path.isfile( BASE_DIR + '//' + f):
                             #program pssibly found dir or other fodler | remove
                             files.remove(f)
                     #NOW SHOW ALL SAVES AND LE USER SELECT ONE
                     loadSaveFile = None # VAR FOR FILE NAME AFTER SELECTED
+
+
+                    ybox = 90
+                    saveBox = []
+                    for y in range(16):
+                        ybox += 45
+                        saveBox.append([10,ybox])
                     while True:
                         for event in pygame.event.get():
                             if event.type == pygame.VIDEORESIZE:
                                 auth.window = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
                                 auth.width, auth.height = event.w, event.h
-                            if event.type == pyagem.QUIT:
+                            if event.type == pygame.QUIT:
                                 pygame.quit()
                                 quit()
+                            if event.type == pygame.MOUSEBUTTONDOWN:
+                                if ybox > auth.height:
+                                    if event.button == 4:
+                                        for scroll in saveBox:
+                                            scroll[1] -= 45
+                                    if event.button == 5:
+                                        for scroll in saveBox:
+                                            scroll[1] += 45
                         auth.window.fill(colours.get('Sky_blue'))
 
+<<<<<<< HEAD
                         boxWidth = int((auth.width-20)/6)
                         boxHeight = int((auth.height-90)/3)
 
@@ -187,10 +204,15 @@ class Game:
                                 
 
 
+=======
+                        for box in range(len(saveBox)):
+                            if saveBox[box][0] > 90 and saveBox[box][1] < auth.height:
+                                pygame.draw.rect(auth.window, colours.get('Steel_gray'), (saveBox[box][0],saveBox[box][1],auth.width-20,30))
+                                #GUI.text((aut.width-20)/2,saveBox[box][1]+10,'Biome', 15, files[box], colours.get('Azure'), auth.window)
+>>>>>>> 4c6132d5d960a10501c4868496ddf7dd51452e5c
 
+                        
                         pygame.display.flip()
-            else: #NO SAVES FOUND | REDIRECT TO CREATE NEW SAVE
-                self.initiate(self, 'new')
 
 class auth:
 
@@ -204,7 +226,7 @@ class auth:
     def Login(self): #DISPLAY LOGIN PAGE UNLESS RAN THROUGH LAUNCHER | DISPLAY MAIN MENU
         #FOR NOW USE A GENERIC STATEMENT AS A PLACE OLDER FOR A LOGIN SCRIOT
         if self.user == 'Dextron':
-            Game.initiate(Game, 'new')
+            Game.initiate(Game, 'load')
         else:
             print("Incorrect login")
 
