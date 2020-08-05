@@ -183,7 +183,7 @@ class Game:
                                     if click == True:
                                         loadSaveFile = files[i]
                             else:
-                                pygame.draw.rect(auth.window, colours.get('Steel_gray'), (boxWidth*(i+1),boxHeight*(i+1),boxWidth,boxHeight)
+                                pygame.draw.rect(auth.window, colours.get('Steel_gray'), (boxWidth*(i+1),boxHeight*(i+1),boxWidth,boxHeight))
                                 
 
 
